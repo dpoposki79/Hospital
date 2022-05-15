@@ -10,8 +10,8 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class DoktorView(APIView):
-    permission_classes = (IsAuthenticated,) #za najava t.e. loginanje
-#zemanje podatoci sao za eden doktor
+    permission_classes = (IsAuthenticated,) #za najava t.e. logiranje
+#zemanje podatoci samo za eden doktor
     def get (self, request):
         doktor=Doktori.objects.get(id=request.GET["doktorId"])
         doktor_serializer = DoktoriSerilizer(doktor)
