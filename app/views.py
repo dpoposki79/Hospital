@@ -1,11 +1,22 @@
+from audioop import reverse
 from sys import prefix
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from urllib3 import HTTPResponse
 from .models import Doktori, Pacienti, Oddeli, Pregledi, Hospitalizacija
 from rest_framework.response import Response
 from .serializers import DoktoriSerilizer, PacientiSerilizer, OddeliSerilizer, PreglediSerilizer, HospitalizacijaSerilizer
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+#from allauth.socialaccount.providers.github import views as github_views
+#from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+#from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
+#from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+#from dj_rest_auth.registration.views import SocialLoginView
+from dj_rest_auth.registration.views import SocialLoginView
+
+from django.views.generic import TemplateView
+
 
 
 
@@ -151,3 +162,20 @@ class HospitalizacijaView(APIView):
             hospitalizacija_serializer.save()
             return Response (hospitalizacija_serializer.data, status=status.HTTP_201_CREATED)
         return Response({"Errors": hospitalizacija_serializer.errors})
+
+#class GithubConnect(SocialLoginView):
+#    adapter_class = github_views.GitHubOAuth2Adapter
+#    callback_url = "http://127.0.0.1:8000/github"
+#    client_class = OAuth2Client
+#    @property
+#    def callback_url(self):
+#        return self.request.build_absolute_uri(reverse("github_calback"))
+
+def github_callback(request):
+    return redirect ("http://127.0.0.1:8000/homepage")
+
+def home(request):
+    return Response({"Info" : "dobro e"})
+
+class Home(TemplateView):
+    template_name = "home.html"
